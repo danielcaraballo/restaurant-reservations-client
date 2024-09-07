@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Container, Box, Typography, TextField, Button, Link, colors } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import imgLogin from '../assets/imageLogin.png'
@@ -68,7 +69,11 @@ const Login = () => {
           <Box display="flex" justifyContent="center" marginTop="20px">
             <Typography variant="body2">
               Do you have an account?{' '}
-              <Link href="#" color="primary" style={{ color: 'rgb(255, 87, 34)', textDecoration: 'none' }}>
+              <Link href="register/" 
+                    color="primary" 
+                    style={{ color: 
+                    'rgb(255, 87, 34)', 
+                    textDecoration: 'none' }}>
                 Sing up
               </Link>
             </Typography>
