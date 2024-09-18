@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import App from './App.jsx'
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
+import BookingForm from './components/BookingForm.jsx';
 import './index.css'
 
 // createRoot(document.getElementById('root')).render(
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/booking" element={<BookingForm />} />
       </Routes>
     </Router>
   </React.StrictMode>,
