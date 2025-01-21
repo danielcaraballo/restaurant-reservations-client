@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Card,
@@ -14,48 +14,51 @@ import {
   Step,
   Stepper,
   StepLabel,
-} from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/system';
-import logo from '../assets/logo.png'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutlined';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { styled } from "@mui/system";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import TableRestaurantOutlinedIcon from "@mui/icons-material/TableRestaurantOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
-import { logout } from '../services/authService';
-
+import logo from "../assets/logo.png";
+import { logout } from "../services/authService";
 
 const OrangeButton = styled(Button)({
-  backgroundColor: '#FF6600',
-  color: 'white',
-  '&:hover': {
-    backgroundColor: '#FF8C00',
+  backgroundColor: "#FF6600",
+  color: "white",
+  "&:hover": {
+    backgroundColor: "#FF8C00",
   },
 });
 
 const OrangeStepper = styled(Stepper)({
-  '& .MuiStepIcon-root.Mui-active': {
-    color: '#FF6600',
+  "& .MuiStepIcon-root.Mui-active": {
+    color: "#FF6600",
   },
-  '& .MuiStepIcon-root.Mui-completed': {
-    color: '#FF6600',
+  "& .MuiStepIcon-root.Mui-completed": {
+    color: "#FF6600",
   },
 });
 
 export default function Component() {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    date: '',
-    time: '',
-    area: '',
-    guests: '',
+    name: "",
+    email: "",
+    date: "",
+    time: "",
+    area: "",
+    guests: "",
   });
 
-  const steps = ['Customer information', 'Booking information', 'Confirm reservation'];
+  const steps = [
+    "Customer information",
+    "Booking information",
+    "Confirm reservation",
+  ];
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -75,7 +78,7 @@ export default function Component() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
     // Here you would typically send the data to your backend
   };
 
@@ -83,11 +86,10 @@ export default function Component() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   const BookingForm = (step) => {
-
     switch (step) {
       case 0:
         return (
@@ -113,10 +115,13 @@ export default function Component() {
         );
       case 1:
         return (
-          <Box sx={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr', gap: 2
-          }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 2,
+            }}
+          >
             <TextField
               label="Select Date"
               type="date"
@@ -164,7 +169,9 @@ export default function Component() {
                 onChange={handleInputChange}
               >
                 {[1, 2, 3, 4, 5, 6].map((num) => (
-                  <MenuItem key={num} value={num}>{num}</MenuItem>
+                  <MenuItem key={num} value={num}>
+                    {num}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -177,66 +184,117 @@ export default function Component() {
               variant="h6"
               gutterBottom
               sx={{
-                borderBottom: '1px solid rgba(0,0,0,.2)',
-                paddingBottom: '8px'
-              }}>
+                borderBottom: "1px solid rgba(0,0,0,.2)",
+                paddingBottom: "8px",
+              }}
+            >
               Restaurant
             </Typography>
             {/* <Typography>Name: {formData.name}</Typography>
             <Typography>Email: {formData.email}</Typography> */}
-            <Grid container spacing={3} sx={{ display: 'flex', alignItems: 'center' }}>
+            <Grid
+              container
+              spacing={3}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
               <Grid item xs={3}>
-                <Typography sx={{ display: 'flex', fontSize: '11px', color: 'rgba(0,0,0,.4)' }}>
-                  <CalendarMonthIcon sx={{ color: '#FF6600' }} />
+                <Typography
+                  sx={{
+                    display: "flex",
+                    fontSize: "11px",
+                    color: "rgba(0,0,0,.4)",
+                  }}
+                >
+                  <CalendarMonthIcon sx={{ color: "#FF6600" }} />
                   Date: {formData.date}
                 </Typography>
-                <Typography sx={{ display: 'flex', fontSize: '11px', color: 'rgba(0,0,0,.4)' }}>
-                  <TableRestaurantOutlinedIcon sx={{ color: '#FF6600' }} />
+                <Typography
+                  sx={{
+                    display: "flex",
+                    fontSize: "11px",
+                    color: "rgba(0,0,0,.4)",
+                  }}
+                >
+                  <TableRestaurantOutlinedIcon sx={{ color: "#FF6600" }} />
                   Area: {formData.area}
                 </Typography>
               </Grid>
 
               <Grid item xs={3}>
-
-                <Typography sx={{ display: 'flex', marginLeft: '7px', fontSize: '11px', color: 'rgba(0,0,0,.4)' }}>
-                  <AccessTimeIcon sx={{ color: '#FF6600' }} />
+                <Typography
+                  sx={{
+                    display: "flex",
+                    marginLeft: "7px",
+                    fontSize: "11px",
+                    color: "rgba(0,0,0,.4)",
+                  }}
+                >
+                  <AccessTimeIcon sx={{ color: "#FF6600" }} />
                   Time: {formData.time}
                 </Typography>
-                <Typography sx={{ display: 'flex', marginLeft: '7px', fontSize: '11px', color: 'rgba(0,0,0,.4)' }}>
-                  <PermIdentityIcon sx={{ color: '#FF6600' }} />
+                <Typography
+                  sx={{
+                    display: "flex",
+                    marginLeft: "7px",
+                    fontSize: "11px",
+                    color: "rgba(0,0,0,.4)",
+                  }}
+                >
+                  <PermIdentityIcon sx={{ color: "#FF6600" }} />
                   Guests: {formData.guests}
                 </Typography>
               </Grid>
 
-              <Grid item xs={6} >
-                <Grid container spacing={2} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Grid item xs={6}>
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
                   <Grid item sx={6}>
-                    <Typography variant='h6' sx={{ color: '#229954' }}><strong>Confirmed</strong></Typography>
-                    <Typography sx={{ color: 'rgba(0,0,0,.8)', fontSize: '13px' }}><strong>Booking #25451</strong></Typography>
+                    <Typography variant="h6" sx={{ color: "#229954" }}>
+                      <strong>Confirmed</strong>
+                    </Typography>
+                    <Typography
+                      sx={{ color: "rgba(0,0,0,.8)", fontSize: "13px" }}
+                    >
+                      <strong>Booking #25451</strong>
+                    </Typography>
                   </Grid>
                   <Grid item sx={6}>
-                    <CheckCircleOutlineOutlinedIcon sx={{ fontSize: '70px', color: '#229954' }} />
+                    <CheckCircleOutlineOutlinedIcon
+                      sx={{ fontSize: "70px", color: "#229954" }}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-            <Box sx={{ color: 'rgba(0,0,0,.6)' }}>
-              <Typography sx={{ fontSize: '12px', marginTop: '15px' }}>
-                Should your plans change, please let us know. We look forward to serving you.
+            <Box sx={{ color: "rgba(0,0,0,.6)" }}>
+              <Typography sx={{ fontSize: "12px", marginTop: "15px" }}>
+                Should your plans change, please let us know. We look forward to
+                serving you.
               </Typography>
             </Box>
           </Box>
-
         );
       default:
-        return 'Unknown step';
+        return "Unknown step";
     }
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f0f0f0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <Grid sx={{ marginBottom: '30px' }}>
-        <img src={logo} sx={{ with: '10%', marginBottom: '10px' }} />
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#f0f0f0",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Grid sx={{ marginBottom: "30px" }}>
+        <img src={logo} sx={{ with: "10%", marginBottom: "10px" }} />
       </Grid>
 
       <div>
@@ -244,21 +302,27 @@ export default function Component() {
         <button onClick={handleLogout}>Cerrar Sesión</button>
       </div>
 
-      <Card sx={{ maxWidth: 600, width: '100%', boxShadow: 3 }}>
-        <CardContent sx={{ padding: '70px' }}>
-          <Typography variant="h5"
+      <Card sx={{ maxWidth: 600, width: "100%", boxShadow: 3 }}>
+        <CardContent sx={{ padding: "70px" }}>
+          <Typography
+            variant="h5"
             component="h2"
             gutterBottom
             sx={{
-              color: 'rgba(0,0,0,.7)',
-              borderBottom: '1px solid rgba(0,0,0,.2)',
-              marginBottom: '30px',
-              paddingBottom: '5px'
-            }}>
+              color: "rgba(0,0,0,.7)",
+              borderBottom: "1px solid rgba(0,0,0,.2)",
+              marginBottom: "30px",
+              paddingBottom: "5px",
+            }}
+          >
             Booking Form
           </Typography>
 
-          <OrangeStepper activeStep={activeStep} alternativeLabel sx={{ marginBottom: 4 }}>
+          <OrangeStepper
+            activeStep={activeStep}
+            alternativeLabel
+            sx={{ marginBottom: 4 }}
+          >
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -266,10 +330,20 @@ export default function Component() {
             ))}
           </OrangeStepper>
 
-          <Box component="form" onSubmit={handleSubmit} sx={{ minHeight: '200px' }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ minHeight: "200px" }}
+          >
             {BookingForm(activeStep)}
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 2,
+              }}
+            >
               <Button
                 variant="contained"
                 color="inherit"
@@ -292,7 +366,10 @@ export default function Component() {
         </CardContent>
       </Card>
 
-      <Typography variant="body2" sx={{ marginTop: 4, color: 'text.secondary' }}>
+      <Typography
+        variant="body2"
+        sx={{ marginTop: 4, color: "text.secondary" }}
+      >
         ©2024 Reservations - By Dev. Project
       </Typography>
     </Box>

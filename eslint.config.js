@@ -4,9 +4,11 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import prettier from "eslint-plugin-prettier";
+import importPlugin from "eslint-plugin-import";
+import materialUI from "eslint-plugin-material-ui";
 
 export default [
-  { ignores: ["dist"] },
+  { ignores: ["dist", "node_modules", "public"] },
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
@@ -24,6 +26,8 @@ export default [
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       prettier,
+      import: importPlugin,
+      "material-ui": materialUI,
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -39,13 +43,11 @@ export default [
       "import/order": [
         "error",
         {
-          groups: [
-            ["builtin", "external"],
-            ["internal", "parent", "sibling", "index"],
-          ],
+          groups: [["builtin", "external"], "internal"],
           "newlines-between": "always",
         },
       ],
+      "react/no-unknown-property": "off",
     },
   },
 ];
