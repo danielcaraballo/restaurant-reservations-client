@@ -6,6 +6,7 @@ import {
   TextField,
   Button,
   Link,
+  Alert,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
@@ -15,18 +16,27 @@ import logo from "../assets/logo.png";
 import { login } from "../services/authService";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    if (!identifier.trim() || !password.trim()) {
+      setError("All fields are required");
+      return;
+    }
     try {
-      await login(username, password);
+      await login(identifier, password);
       navigate("/booking");
-    } catch {
-      setError("Credenciales incorrectas");
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError("Incorrect credentials.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -49,11 +59,11 @@ const Login = () => {
             flexDirection: "column",
             justifyContent: "end",
             alignItems: "center",
-            padding: "0 70px",
+            px: { xs: 3, md: 8 },
           }}
         >
           <Grid>
-            <img src={logo} sx={{ with: "10%" }} />
+            <img src={logo} sx={{ width: "10%" }} alt="Logo" />
           </Grid>
           <Typography
             variant="h6"
@@ -62,6 +72,8 @@ const Login = () => {
               color: "rgba(0,0,0,.7)",
               width: "100%",
               borderBottom: "1px solid rgba(0,0,0,.2)",
+              textAlign: "left",
+              paddingBottom: "10px",
             }}
           >
             Login into Reservations
@@ -69,12 +81,12 @@ const Login = () => {
 
           <form onSubmit={handleSubmit}>
             <TextField
-              label="Email address"
+              label="Email or username"
               type="text"
               variant="outlined"
               margin="normal"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
               fullWidth
             />
             <TextField
@@ -86,14 +98,20 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
             />
-            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            {error && (
+              <Alert severity="error" style={{ marginTop: "10px" }}>
+                {error}
+              </Alert>
+            )}
+
             <Button
               type="submit"
               variant="contained"
               color="primary"
               size="large"
               fullWidth
-              style={{ marginTop: "20px", background: "rgb(255, 87, 34)" }}
+              sx={{ marginTop: "20px", backgroundColor: "rgb(255, 87, 34)" }}
             >
               SIGN IN
             </Button>
@@ -106,12 +124,12 @@ const Login = () => {
               <Link
                 href="register/"
                 color="primary"
-                style={{
+                sx={{
                   color: "rgb(255, 87, 34)",
                   textDecoration: "none",
                 }}
               >
-                Sing up
+                Sign up
               </Link>
             </Typography>
           </Box>
