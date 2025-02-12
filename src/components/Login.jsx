@@ -59,12 +59,14 @@ const Login = () => {
             flexDirection: "column",
             justifyContent: "end",
             alignItems: "center",
-            px: { xs: 3, md: 8 },
+            padding: "50px 100px",
+            height: "100%",
           }}
         >
-          <Grid>
-            <img src={logo} sx={{ width: "10%" }} alt="Logo" />
+          <Grid sx={{ marginBottom: "20px" }}>
+            <img src={logo} sx={{ width: "120px" }} alt="Logo" />
           </Grid>
+
           <Typography
             variant="h6"
             gutterBottom
@@ -100,7 +102,7 @@ const Login = () => {
             />
 
             {error && (
-              <Alert severity="error" style={{ marginTop: "10px" }}>
+              <Alert severity="error" sx={{ marginTop: "10px" }}>
                 {error}
               </Alert>
             )}
@@ -133,12 +135,11 @@ const Login = () => {
               </Link>
             </Typography>
           </Box>
-
-          <Box>
-            <Typography variant="body2" align="center" color="textSecondary">
-              ©2024 Reservations - By Dev. Project
-            </Typography>
-          </Box>
+        </Box>
+        <Box sx={{ marginTop: "auto", textAlign: "center" }}>
+          <Typography variant="body2" align="center" color="textSecondary">
+            ©2024 Reservations - By Dev. Project
+          </Typography>
         </Box>
       </Grid>
 
