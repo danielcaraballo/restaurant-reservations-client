@@ -58,7 +58,7 @@ const Login = () => {
             flexDirection: "column",
             justifyContent: "end",
             alignItems: "center",
-            padding: "50px 100px",
+            padding: "30px 100px",
             height: "100%",
           }}
         >
