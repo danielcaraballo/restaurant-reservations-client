@@ -6,11 +6,11 @@ import {
   Typography,
   TextField,
   Button,
-  Link,
   Alert,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
+import { Link } from "react-router-dom";
 
 import imgLogin from "../assets/imageLogin.png";
 import logo from "../assets/logo.png";
@@ -22,15 +22,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const handleChange = (setter) => (e) => setter(e.target.value);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -43,21 +36,19 @@ const Register = () => {
     setSuccess(null);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://127.0.0.1:8000/api/auth/register/",
         { username, email, password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
+        { headers: { "Content-Type": "application/json" } },
       );
-      console.log(response);
-      setSuccess(response.data.message);
-    } catch (err) {
-      console.log(err);
-    } finally {
       setSuccess("Usuario creado exitosamente");
+    } catch (err) {
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+    } finally {
       setLoading(false);
     }
   };
@@ -83,12 +74,14 @@ const Register = () => {
             flexDirection: "column",
             justifyContent: "end",
             alignItems: "center",
-            padding: "0 70px",
+            padding: "50px 100px",
+            height: "100%",
           }}
         >
-          <Grid>
-            <img src={logo} sx={{ with: "10%" }} />
+          <Grid sx={{ marginBottom: "20px" }}>
+            <img src={logo} sx={{ width: "120px" }} alt="Logo" />
           </Grid>
+
           <Typography
             variant="h6"
             gutterBottom
@@ -101,14 +94,26 @@ const Register = () => {
           >
             Create account
           </Typography>
-          {error && <Alert severity="error">{error}</Alert>}
-          {success && <Alert severity="success">{success}</Alert>}
+
+          {/* ALERTA DE ERROR */}
+          {error && (
+            <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          {/* ALERTA DE ÉXITO */}
+          {success && (
+            <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
+              {success}
+            </Alert>
+          )}
 
           <TextField
             label="Username"
             type="text"
             value={username}
-            onChange={handleUsernameChange}
+            onChange={handleChange(setUsername)}
             variant="outlined"
             margin="normal"
             fullWidth
@@ -118,7 +123,7 @@ const Register = () => {
             label="Email address"
             type="email"
             value={email}
-            onChange={handleEmailChange}
+            onChange={handleChange(setEmail)}
             variant="outlined"
             margin="normal"
             fullWidth
@@ -128,7 +133,7 @@ const Register = () => {
             label="Password"
             type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={handleChange(setPassword)}
             variant="outlined"
             margin="normal"
             fullWidth
@@ -163,14 +168,14 @@ const Register = () => {
             <Typography variant="body2">
               Already have an account?{" "}
               <Link
-                href="/"
+                to="/"
                 color="primary"
                 style={{
                   color: "rgb(255, 87, 34)",
                   textDecoration: "none",
                 }}
               >
-                Sing in
+                Sign in
               </Link>
             </Typography>
           </Box>

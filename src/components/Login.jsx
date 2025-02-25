@@ -5,11 +5,10 @@ import {
   Typography,
   TextField,
   Button,
-  Link,
   Alert,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import imgLogin from "../assets/imageLogin.png";
 import logo from "../assets/logo.png";
@@ -81,6 +80,13 @@ const Login = () => {
             Login into Reservations
           </Typography>
 
+          {/* ALERTA DE ERROR */}
+          {error && (
+            <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
+              {error}
+            </Alert>
+          )}
+
           <form onSubmit={handleSubmit}>
             <TextField
               label="Email or username"
@@ -101,12 +107,6 @@ const Login = () => {
               fullWidth
             />
 
-            {error && (
-              <Alert severity="error" sx={{ marginTop: "10px" }}>
-                {error}
-              </Alert>
-            )}
-
             <Button
               type="submit"
               variant="contained"
@@ -124,9 +124,9 @@ const Login = () => {
             <Typography variant="body2">
               Do you have an account?{" "}
               <Link
-                href="register/"
+                to="register/"
                 color="primary"
-                sx={{
+                style={{
                   color: "rgb(255, 87, 34)",
                   textDecoration: "none",
                 }}
