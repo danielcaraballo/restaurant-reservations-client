@@ -14,6 +14,7 @@ import {
   Step,
   Stepper,
   StepLabel,
+  FormHelperText,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
@@ -22,6 +23,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import TableRestaurantOutlinedIcon from "@mui/icons-material/TableRestaurantOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import LogoutIcon from "@mui/icons-material/Logout"; // Asegúrate de importar el icono
 
 import logo from "../assets/logo.png";
 import { logout } from "../services/authService";
@@ -46,12 +48,25 @@ const OrangeStepper = styled(Stepper)({
 export default function Component() {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     date: "",
     time: "",
     area: "",
     guests: "",
+  });
+
+  const [errors, setErrors] = useState({
+    date: "",
+    time: "",
+    area: "",
+    guests: "",
+  });
+
+  // Datos estáticos del usuario (simulando respuesta de API)
+  const [userData] = useState({
+    firstName: "Daniel",
+    lastName: "Caraballo",
+    email: "daniel@example.com",
+    phone: "+1 234 567 890",
   });
 
   const steps = [
@@ -61,7 +76,20 @@ export default function Component() {
   ];
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === 1) {
+      // Validar solo en el paso 2 (booking information)
+      const newErrors = {};
+      if (!formData.date) newErrors.date = "Please select a date";
+      if (!formData.time) newErrors.time = "Please select a time";
+      if (!formData.area) newErrors.area = "Please select an area";
+      if (!formData.guests) newErrors.guests = "Please select number of guests";
+
+      setErrors(newErrors);
+
+      if (Object.keys(newErrors).length > 0) return;
+    }
+
+    setActiveStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
@@ -73,6 +101,10 @@ export default function Component() {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
     }));
   };
 
@@ -86,51 +118,173 @@ export default function Component() {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   const BookingForm = (step) => {
     switch (step) {
       case 0:
         return (
-          <>
-            <TextField
-              fullWidth
-              label="Name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              margin="normal"
-            />
-          </>
+          <Box sx={{ mb: 3 }}>
+            <Grid container spacing={2}>
+              {/* Campo First Name */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="First Name"
+                  value={userData.firstName}
+                  InputProps={{
+                    readOnly: true,
+                    sx: {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23)", // Color original
+                      },
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                    },
+                  }}
+                  variant="outlined"
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      backgroundColor: "rgba(0,0,0,.05)",
+                      pointerEvents: "none", // Deshabilita cualquier interacción
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23) !important",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              {/* Campo Last Name */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Last Name"
+                  value={userData.lastName}
+                  InputProps={{
+                    readOnly: true,
+                    sx: {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                    },
+                  }}
+                  variant="outlined"
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      backgroundColor: "rgba(0,0,0,.05)",
+                      pointerEvents: "none",
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23) !important",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              {/* Campo Email */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  value={userData.email}
+                  InputProps={{
+                    readOnly: true,
+                    sx: {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                    },
+                  }}
+                  variant="outlined"
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      backgroundColor: "rgba(0,0,0,.05)",
+                      pointerEvents: "none",
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23) !important",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              {/* Campo Phone */}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  label="Phone"
+                  value={userData.phone}
+                  InputProps={{
+                    readOnly: true,
+                    sx: {
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23)",
+                      },
+                    },
+                  }}
+                  variant="outlined"
+                  sx={{
+                    "& .MuiInputBase-root": {
+                      backgroundColor: "rgba(0,0,0,.05)",
+                      pointerEvents: "none",
+                      "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "rgba(0, 0, 0, 0.23) !important",
+                      },
+                    },
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mt: 2,
+                    color: "rgba(0,0,0,.5)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  Not you?{" "}
+                  <Button
+                    onClick={handleLogout}
+                    sx={{
+                      color: "#FF6600",
+                      textTransform: "none",
+                      p: 0,
+                      "&:hover": { backgroundColor: "transparent" },
+                    }}
+                  >
+                    Switch account
+                  </Button>
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
         );
       case 1:
         return (
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 2,
-            }}
-          >
-            <TextField
-              label="Select Date"
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleInputChange}
-              InputLabelProps={{ shrink: true }}
-            />
-            <FormControl fullWidth>
+          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+            {/* Date Picker */}
+            <FormControl fullWidth error={!!errors.date}>
+              <TextField
+                label="Select Date"
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                InputLabelProps={{ shrink: true }}
+                required
+              />
+              <FormHelperText>{errors.date}</FormHelperText>
+            </FormControl>
+
+            {/* Time Select */}
+            <FormControl fullWidth error={!!errors.time} required>
               <InputLabel id="time-select-label">Select Time</InputLabel>
               <Select
                 labelId="time-select-label"
@@ -140,11 +294,17 @@ export default function Component() {
                 label="Select Time"
                 onChange={handleInputChange}
               >
+                <MenuItem value="" disabled>
+                  <em>Select time</em>
+                </MenuItem>
                 <MenuItem value="Lunch">Lunch</MenuItem>
                 <MenuItem value="Dinner">Dinner</MenuItem>
               </Select>
+              <FormHelperText>{errors.time}</FormHelperText>
             </FormControl>
-            <FormControl fullWidth>
+
+            {/* Area Select */}
+            <FormControl fullWidth error={!!errors.area} required>
               <InputLabel id="area-select-label">Area</InputLabel>
               <Select
                 labelId="area-select-label"
@@ -154,11 +314,17 @@ export default function Component() {
                 label="Area"
                 onChange={handleInputChange}
               >
+                <MenuItem value="" disabled>
+                  <em>Select area</em>
+                </MenuItem>
                 <MenuItem value="Balcony">Balcony</MenuItem>
                 <MenuItem value="Indoor">Indoor</MenuItem>
               </Select>
+              <FormHelperText>{errors.area}</FormHelperText>
             </FormControl>
-            <FormControl fullWidth>
+
+            {/* Guests Select */}
+            <FormControl fullWidth error={!!errors.guests} required>
               <InputLabel id="guests-select-label">Number of guests</InputLabel>
               <Select
                 labelId="guests-select-label"
@@ -168,109 +334,218 @@ export default function Component() {
                 label="Number of guests"
                 onChange={handleInputChange}
               >
+                <MenuItem value="" disabled>
+                  <em>Select guests</em>
+                </MenuItem>
                 {[1, 2, 3, 4, 5, 6].map((num) => (
                   <MenuItem key={num} value={num}>
                     {num}
                   </MenuItem>
                 ))}
               </Select>
+              <FormHelperText>{errors.guests}</FormHelperText>
             </FormControl>
           </Box>
         );
       case 2:
         return (
           <Box>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{
-                borderBottom: "1px solid rgba(0,0,0,.2)",
-                paddingBottom: "8px",
-              }}
-            >
-              Restaurant
-            </Typography>
-            {/* <Typography>Name: {formData.name}</Typography>
-            <Typography>Email: {formData.email}</Typography> */}
-            <Grid
-              container
-              spacing={3}
-              sx={{ display: "flex", alignItems: "center" }}
-            >
-              <Grid item xs={3}>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    fontSize: "11px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
-                >
-                  <CalendarMonthIcon sx={{ color: "#FF6600" }} />
-                  Date: {formData.date}
-                </Typography>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    fontSize: "11px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
-                >
-                  <TableRestaurantOutlinedIcon sx={{ color: "#FF6600" }} />
-                  Area: {formData.area}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={3}>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    marginLeft: "7px",
-                    fontSize: "11px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
-                >
-                  <AccessTimeIcon sx={{ color: "#FF6600" }} />
-                  Time: {formData.time}
-                </Typography>
-                <Typography
-                  sx={{
-                    display: "flex",
-                    marginLeft: "7px",
-                    fontSize: "11px",
-                    color: "rgba(0,0,0,.4)",
-                  }}
-                >
-                  <PermIdentityIcon sx={{ color: "#FF6600" }} />
-                  Guests: {formData.guests}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Grid
-                  container
-                  spacing={2}
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <Grid item sx={6}>
-                    <Typography variant="h6" sx={{ color: "#229954" }}>
-                      <strong>Confirmed</strong>
-                    </Typography>
-                    <Typography
-                      sx={{ color: "rgba(0,0,0,.8)", fontSize: "13px" }}
+            <Grid container spacing={3}>
+              {/* Columna Izquierda - Detalles en 2 columnas */}
+              <Grid item xs={12} md={8}>
+                <Grid container spacing={3}>
+                  {/* Columna 1 */}
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      sx={{ display: "flex", flexDirection: "column", gap: 3 }}
                     >
-                      <strong>Booking #25451</strong>
-                    </Typography>
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
+                      >
+                        <CalendarMonthIcon
+                          sx={{
+                            color: "#FF6600",
+                            fontSize: "28px",
+                            flexShrink: 0,
+                          }}
+                        />
+                        <Box>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                          >
+                            Date
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{ color: "rgba(0,0,0,.8)" }}
+                          >
+                            {formData.date}
+                          </Typography>
+                        </Box>
+                      </Box>
+
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
+                      >
+                        <AccessTimeIcon
+                          sx={{
+                            color: "#FF6600",
+                            fontSize: "28px",
+                            flexShrink: 0,
+                          }}
+                        />
+                        <Box>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                          >
+                            Time
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{ color: "rgba(0,0,0,.8)" }}
+                          >
+                            {formData.time}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
                   </Grid>
-                  <Grid item sx={6}>
-                    <CheckCircleOutlineOutlinedIcon
-                      sx={{ fontSize: "70px", color: "#229954" }}
-                    />
+
+                  {/* Columna 2 */}
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+                    >
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
+                      >
+                        <PermIdentityIcon
+                          sx={{
+                            color: "#FF6600",
+                            fontSize: "28px",
+                            flexShrink: 0,
+                          }}
+                        />
+                        <Box>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                          >
+                            Guests
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{ color: "rgba(0,0,0,.8)" }}
+                          >
+                            {formData.guests}
+                          </Typography>
+                        </Box>
+                      </Box>
+
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
+                      >
+                        <TableRestaurantOutlinedIcon
+                          sx={{
+                            color: "#FF6600",
+                            fontSize: "28px",
+                            flexShrink: 0,
+                          }}
+                        />
+                        <Box>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                          >
+                            Area
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{ color: "rgba(0,0,0,.8)" }}
+                          >
+                            {formData.area}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
+
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    backgroundColor: "rgba(34, 153, 84, 0.1)",
+                    borderRadius: 2,
+                    padding: 2,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Box>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          color: "#229954",
+                          fontWeight: 700,
+                          fontSize: "1.1rem",
+                          lineHeight: 1.2,
+                          mb: 1,
+                        }}
+                      >
+                        Confirmed
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "rgba(0,0,0,.8)",
+                          fontWeight: 500,
+                          fontSize: "0.9rem",
+                        }}
+                      >
+                        Booking #25451
+                      </Typography>
+                    </Box>
+                    <CheckCircleOutlineOutlinedIcon
+                      sx={{
+                        fontSize: "40px",
+                        color: "#229954",
+                        mt: 0.5,
+                      }}
+                    />
+                  </Box>
+                </Box>
+              </Grid>
             </Grid>
-            <Box sx={{ color: "rgba(0,0,0,.6)" }}>
-              <Typography sx={{ fontSize: "12px", marginTop: "15px" }}>
+
+            {/* Mensaje inferior */}
+            <Box
+              sx={{
+                marginTop: "24px",
+                padding: "16px",
+                backgroundColor: "rgba(255, 102, 0, 0.05)",
+                borderRadius: 2,
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "rgba(0,0,0,.7)",
+                  fontSize: "0.90rem",
+                  lineHeight: 1.5,
+                  textAlign: "center",
+                }}
+              >
                 Should your plans change, please let us know. We look forward to
                 serving you.
               </Typography>
@@ -297,12 +572,33 @@ export default function Component() {
         <img src={logo} sx={{ with: "10%", marginBottom: "10px" }} />
       </Grid>
 
-      <div>
-        <h1>Bienvenido al Dashboard</h1>
-        <button onClick={handleLogout}>Cerrar Sesión</button>
-      </div>
+      <Button
+        onClick={handleLogout}
+        variant="outlined"
+        startIcon={<LogoutIcon sx={{ fontSize: "18px" }} />}
+        sx={{
+          position: "fixed",
+          top: 20,
+          right: 20,
+          color: "#FF6600",
+          borderColor: "#FF6600",
+          borderRadius: "8px",
+          padding: "8px 16px",
+          textTransform: "none",
+          fontWeight: 500,
+          transition: "all 0.3s ease",
+          "&:hover": {
+            backgroundColor: "rgba(255, 102, 0, 0.08)",
+            borderColor: "#FF8C00",
+            color: "#FF8C00",
+            boxShadow: "0 2px 8px rgba(255, 102, 0, 0.2)",
+          },
+        }}
+      >
+        Logout
+      </Button>
 
-      <Card sx={{ maxWidth: 600, width: "100%", boxShadow: 3 }}>
+      <Card sx={{ maxWidth: 700, width: "100%", boxShadow: 3 }}>
         <CardContent sx={{ padding: "70px" }}>
           <Typography
             variant="h5"
