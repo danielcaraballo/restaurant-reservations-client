@@ -14,6 +14,11 @@ import imgLogin from "../assets/imageLogin.png";
 import logo from "../assets/logo.png";
 import { login } from "../services/authService";
 
+const DEMO_CREDENTIALS = {
+  username: "demoUser",
+  password: "demoPass",
+};
+
 const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +32,16 @@ const Login = () => {
       setError("All fields are required");
       return;
     }
+
+    // Modo demo: Validar credenciales estáticas
+    if (
+      identifier === DEMO_CREDENTIALS.username &&
+      password === DEMO_CREDENTIALS.password
+    ) {
+      navigate("/booking");
+      return;
+    }
+
     try {
       await login(identifier, password);
       navigate("/booking");
