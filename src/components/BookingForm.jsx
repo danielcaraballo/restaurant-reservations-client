@@ -274,7 +274,13 @@ export default function Component() {
         );
       case 1:
         return (
-          <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2 }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, // Cambia a 1 columna en móviles
+              gap: 2,
+            }}
+          >
             {/* Date Picker */}
             <FormControl fullWidth error={!!errors.date}>
               <TextField
@@ -357,13 +363,13 @@ export default function Component() {
         return (
           <Box>
             <Grid container justifyContent="center" alignItems="center">
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={12}>
                 <Box
                   sx={{
                     display: "flex",
                     justifyContent: "center",
                     gap: 4,
-                    flexWrap: "nowrap",
+                    flexWrap: "wrap",
                     maxWidth: "100%",
                   }}
                 >
@@ -485,15 +491,15 @@ export default function Component() {
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundColor: "#f0f0f0",
+        backgroundColor: { xs: "#ffffff", md: "#f0f0f0" },
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <Grid sx={{ marginBottom: "30px" }}>
-        <img src={logo} sx={{ with: "10%", marginBottom: "10px" }} />
+      <Grid sx={{ marginBottom: "30px", marginTop: { xs: "60px", md: "0px" } }}>
+        <img src={logo} sx={{ width: "10%", marginBottom: "10px" }} />
       </Grid>
 
       <Button
@@ -516,8 +522,17 @@ export default function Component() {
         Logout
       </Button>
 
-      <Card sx={{ maxWidth: 700, width: "100%", boxShadow: 3 }}>
-        <CardContent sx={{ padding: "70px" }}>
+      <Card
+        sx={{
+          display: "block",
+          maxWidth: 700,
+          width: "100%",
+          borderRadius: 2,
+        }}
+      >
+        <CardContent
+          sx={{ padding: { xs: "20px", sm: "30px 60px", md: "30px 100px" } }}
+        >
           <Typography
             variant="h5"
             component="h2"
@@ -588,7 +603,6 @@ export default function Component() {
           </Box>
         </CardContent>
       </Card>
-
       <Typography
         variant="body2"
         sx={{ marginTop: 4, color: "text.secondary" }}

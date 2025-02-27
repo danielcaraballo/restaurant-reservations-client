@@ -73,8 +73,9 @@ const Login = () => {
             flexDirection: "column",
             justifyContent: "end",
             alignItems: "center",
-            padding: "30px 100px",
-            height: "100%",
+            padding: { xs: "20px", sm: "30px 60px", md: "30px 100px" },
+            maxWidth: "500px",
+            width: "100%",
           }}
         >
           <Grid sx={{ marginBottom: "20px" }}>
