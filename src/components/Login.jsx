@@ -95,6 +95,11 @@ const Login = () => {
             Login into Reservations
           </Typography>
 
+          <Alert severity="info" sx={{ width: "100%", mt: 2 }}>
+            Demo Mode: Use <strong>demoUser</strong> / <strong>demoPass</strong>{" "}
+            to log in.
+          </Alert>
+
           {/* ALERTA DE ERROR */}
           {error && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>

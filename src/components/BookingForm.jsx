@@ -22,9 +22,9 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import TableRestaurantOutlinedIcon from "@mui/icons-material/TableRestaurantOutlined";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import LogoutIcon from "@mui/icons-material/Logout"; // Asegúrate de importar el icono
+import LogoutIcon from "@mui/icons-material/Logout";
 
+import DemoAlert from "../components/DemoAlert";
 import logo from "../assets/logo.png";
 import { logout } from "../services/authService";
 
@@ -60,6 +60,12 @@ export default function Component() {
     area: "",
     guests: "",
   });
+
+  const [openDemoAlert, setOpenDemoAlert] = useState(false);
+
+  const handleConfirm = () => {
+    setOpenDemoAlert(true); // Muestra la alerta
+  };
 
   // Datos estáticos del usuario (simulando respuesta de API)
   const [userData] = useState({
@@ -350,179 +356,99 @@ export default function Component() {
       case 2:
         return (
           <Box>
-            <Grid container spacing={3}>
-              {/* Columna Izquierda - Detalles en 2 columnas */}
+            <Grid container justifyContent="center" alignItems="center">
               <Grid item xs={12} md={8}>
-                <Grid container spacing={3}>
-                  {/* Columna 1 */}
-                  <Grid item xs={12} md={6}>
-                    <Box
-                      sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-                    >
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
-                      >
-                        <CalendarMonthIcon
-                          sx={{
-                            color: "#FF6600",
-                            fontSize: "28px",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <Box>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
-                          >
-                            Date
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{ color: "rgba(0,0,0,.8)" }}
-                          >
-                            {formData.date}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
-                      >
-                        <AccessTimeIcon
-                          sx={{
-                            color: "#FF6600",
-                            fontSize: "28px",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <Box>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
-                          >
-                            Time
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{ color: "rgba(0,0,0,.8)" }}
-                          >
-                            {formData.time}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Grid>
-
-                  {/* Columna 2 */}
-                  <Grid item xs={12} md={6}>
-                    <Box
-                      sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-                    >
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
-                      >
-                        <PermIdentityIcon
-                          sx={{
-                            color: "#FF6600",
-                            fontSize: "28px",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <Box>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
-                          >
-                            Guests
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{ color: "rgba(0,0,0,.8)" }}
-                          >
-                            {formData.guests}
-                          </Typography>
-                        </Box>
-                      </Box>
-
-                      <Box
-                        sx={{ display: "flex", alignItems: "center", gap: 2 }}
-                      >
-                        <TableRestaurantOutlinedIcon
-                          sx={{
-                            color: "#FF6600",
-                            fontSize: "28px",
-                            flexShrink: 0,
-                          }}
-                        />
-                        <Box>
-                          <Typography
-                            variant="body2"
-                            sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
-                          >
-                            Area
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            sx={{ color: "rgba(0,0,0,.8)" }}
-                          >
-                            {formData.area}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} md={4}>
                 <Box
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
                     justifyContent: "center",
-                    backgroundColor: "rgba(34, 153, 84, 0.1)",
-                    borderRadius: 2,
-                    padding: 2,
+                    gap: 4,
+                    flexWrap: "nowrap",
+                    maxWidth: "100%",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                    }}
-                  >
+                  {/* Fecha */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                    <CalendarMonthIcon
+                      sx={{ color: "#FF6600", fontSize: "28px", flexShrink: 0 }}
+                    />
                     <Box>
                       <Typography
-                        variant="h6"
-                        sx={{
-                          color: "#229954",
-                          fontWeight: 700,
-                          fontSize: "1.1rem",
-                          lineHeight: 1.2,
-                          mb: 1,
-                        }}
+                        variant="body2"
+                        sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
                       >
-                        Confirmed
+                        Date
                       </Typography>
                       <Typography
-                        variant="body2"
-                        sx={{
-                          color: "rgba(0,0,0,.8)",
-                          fontWeight: 500,
-                          fontSize: "0.9rem",
-                        }}
+                        variant="body1"
+                        sx={{ color: "rgba(0,0,0,.8)" }}
                       >
-                        Booking #25451
+                        {formData.date}
                       </Typography>
                     </Box>
-                    <CheckCircleOutlineOutlinedIcon
-                      sx={{
-                        fontSize: "40px",
-                        color: "#229954",
-                        mt: 0.5,
-                      }}
+                  </Box>
+
+                  {/* Hora */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                    <AccessTimeIcon
+                      sx={{ color: "#FF6600", fontSize: "28px", flexShrink: 0 }}
                     />
+                    <Box>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                      >
+                        Time
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "rgba(0,0,0,.8)" }}
+                      >
+                        {formData.time}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {/* Número de invitados */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                    <PermIdentityIcon
+                      sx={{ color: "#FF6600", fontSize: "28px", flexShrink: 0 }}
+                    />
+                    <Box>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                      >
+                        Guests
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "rgba(0,0,0,.8)" }}
+                      >
+                        {formData.guests}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                  {/* Área */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                    <TableRestaurantOutlinedIcon
+                      sx={{ color: "#FF6600", fontSize: "28px", flexShrink: 0 }}
+                    />
+                    <Box>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "rgba(0,0,0,.5)", fontWeight: 500 }}
+                      >
+                        Area
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "rgba(0,0,0,.8)" }}
+                      >
+                        {formData.area}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
               </Grid>
@@ -533,8 +459,6 @@ export default function Component() {
               sx={{
                 marginTop: "24px",
                 padding: "16px",
-                backgroundColor: "rgba(255, 102, 0, 0.05)",
-                borderRadius: 2,
               }}
             >
               <Typography
@@ -580,18 +504,12 @@ export default function Component() {
           position: "fixed",
           top: 20,
           right: 20,
-          color: "#FF6600",
-          borderColor: "#FF6600",
-          borderRadius: "8px",
-          padding: "8px 16px",
-          textTransform: "none",
+          color: "#E67E22",
+          borderColor: "#E67E22",
           fontWeight: 500,
-          transition: "all 0.3s ease",
           "&:hover": {
-            backgroundColor: "rgba(255, 102, 0, 0.08)",
-            borderColor: "#FF8C00",
-            color: "#FF8C00",
-            boxShadow: "0 2px 8px rgba(255, 102, 0, 0.2)",
+            borderColor: "#D35400",
+            color: "#D35400",
           },
         }}
       >
@@ -649,8 +567,12 @@ export default function Component() {
                 PREVIOUS
               </Button>
               {activeStep === steps.length - 1 ? (
-                <OrangeButton type="submit" variant="contained">
-                  CONTINUE
+                <OrangeButton
+                  type="submit"
+                  variant="contained"
+                  onClick={handleConfirm}
+                >
+                  RESERVE
                 </OrangeButton>
               ) : (
                 <OrangeButton variant="contained" onClick={handleNext}>
@@ -658,6 +580,11 @@ export default function Component() {
                 </OrangeButton>
               )}
             </Box>
+            {/* Modal de alerta de demo */}
+            <DemoAlert
+              open={openDemoAlert}
+              onClose={() => setOpenDemoAlert(false)}
+            />
           </Box>
         </CardContent>
       </Card>
