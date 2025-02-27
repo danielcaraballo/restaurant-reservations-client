@@ -6,34 +6,32 @@ import {
   Typography,
   TextField,
   Button,
-  Link,
   Alert,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Checkbox from "@mui/material/Checkbox";
+// import Checkbox from "@mui/material/Checkbox";
+import { useNavigate, Link } from "react-router-dom";
 
 import imgLogin from "../assets/imageLogin.png";
 import logo from "../assets/logo.png";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
+// const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Register = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
+  const navigate = useNavigate();
+
+  // const handleChange = (setter) => (e) => setter(e.target.value);
 
   // Manejo del envío del formulario
   const handleSubmit = async (e) => {
@@ -45,19 +43,31 @@ const Register = () => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/auth/register/",
-        { username, email, password },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          email,
+          password,
+          password_confirmation: passwordConfirmation,
+          first_name: firstName,
+          last_name: lastName,
+          phone,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
         },
       );
-      console.log(response);
-      setSuccess(response.data.message);
+
+      if (response.status === 201) {
+        const { access } = response.data;
+        localStorage.setItem("token", access); // Guarda el token
+        navigate("/booking"); // Redirige al usuario después del registro
+      }
     } catch (err) {
-      console.log(err);
+      if (err.response?.data) {
+        setError(err.response.data.message || "Error in registration.");
+      } else {
+        setError("Error connecting to the server. Please try again.");
+      }
     } finally {
-      setSuccess("Usuario creado exitosamente");
       setLoading(false);
     }
   };
@@ -83,12 +93,15 @@ const Register = () => {
             flexDirection: "column",
             justifyContent: "end",
             alignItems: "center",
-            padding: "0 70px",
+            padding: { xs: "20px", sm: "30px 60px", md: "30px 100px" },
+            maxWidth: "500px",
+            width: "100%",
           }}
         >
-          <Grid>
-            <img src={logo} sx={{ with: "10%" }} />
+          <Grid sx={{ marginBottom: "20px" }}>
+            <img src={logo} sx={{ width: "120px" }} alt="Logo" />
           </Grid>
+
           <Typography
             variant="h6"
             gutterBottom
@@ -101,40 +114,94 @@ const Register = () => {
           >
             Create account
           </Typography>
-          {error && <Alert severity="error">{error}</Alert>}
-          {success && <Alert severity="success">{success}</Alert>}
 
-          <TextField
-            label="Username"
-            type="text"
-            value={username}
-            onChange={handleUsernameChange}
-            variant="outlined"
-            margin="normal"
-            fullWidth
-          />
+          {/* ALERTA DE ERROR */}
+          {error && (
+            <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          {/* ALERTA DE ÉXITO */}
+          {success && (
+            <Alert severity="success" sx={{ width: "100%", mt: 2 }}>
+              {success}
+            </Alert>
+          )}
+
+          {/* Nuevo Grid container para nombre y apellido */}
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                label="First Name"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Last Name"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
 
           <TextField
             label="Email address"
             type="email"
             value={email}
-            onChange={handleEmailChange}
+            onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             margin="normal"
             fullWidth
           />
+
+          {/* Grid para contraseñas */}
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Confirmation Password"
+                type="password"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
 
           <TextField
-            label="Password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
+            label="Phone"
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             variant="outlined"
             margin="normal"
             fullWidth
           />
 
-          <Container
+          {/* <Container
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -145,7 +212,7 @@ const Register = () => {
             <Typography sx={{ color: "rgba(0,0,0,.5)" }}>
               I agree to the Terms & Conditions
             </Typography>
-          </Container>
+          </Container> */}
 
           <Button
             type="submit"
@@ -163,14 +230,14 @@ const Register = () => {
             <Typography variant="body2">
               Already have an account?{" "}
               <Link
-                href="/"
+                to="/"
                 color="primary"
                 style={{
                   color: "rgb(255, 87, 34)",
                   textDecoration: "none",
                 }}
               >
-                Sing in
+                Sign in
               </Link>
             </Typography>
           </Box>
