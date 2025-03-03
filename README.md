@@ -1,6 +1,6 @@
 ![Thumbnail](https://github.com/user-attachments/assets/cc789673-e251-4259-8920-80d451c0c152)
 
-# Restaurant Reservation Management Frontend
+# Restaurant Reservation Management Client
 
 Frontend for the restaurant reservation management application, built with **React and Material UI (MUI)** to provide a modern, responsive, and intuitive user interface. It seamlessly integrates with the backend API to deliver a complete experience.
 
@@ -17,7 +17,7 @@ Frontend for the restaurant reservation management application, built with **Rea
 
 ## 📦 Current Version
 
-### v0.5.0 (Beta)
+### v0.9.0 (Beta)
 
 > **Note:** This is a beta version. Features are still being tested, and breaking changes may occur as the project evolves.
 
@@ -27,7 +27,7 @@ Frontend for the restaurant reservation management application, built with **Rea
 
 This frontend repository integrates with the backend API, which handles the management of restaurant reservations, including table allocation and reservation status tracking.
 
-You can explore the backend repository here [Restaurant Reservation Management API](https://github.com/devproject-github/restaurant-reservations-backend).
+You can explore the backend repository here [Restaurant Reservation Management API](https://github.com/devproject-github/restaurant-reservations-api).
 
 ---
 
@@ -38,8 +38,8 @@ Follow these steps to set up the project locally:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/devproject-github/restaurant-reservations-frontend.git
-   cd restaurant-reservation-frontend
+   git clone https://github.com/devproject-github/restaurant-reservations-client.git
+   cd restaurant-reservation-client
    ```
 
 2. **Install dependencies**:
@@ -65,7 +65,7 @@ We welcome contributions! Follow these steps to get started:
 1. Fork the repository.
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/devproject-github/restaurant-reservations-frontend.git
+   git clone https://github.com/devproject-github/restaurant-reservations-client.git
    ```
 3. Create a new branch:
    ```bash
@@ -90,6 +90,5 @@ We welcome contributions! Follow these steps to get started:
 Feel free to contact us for any inquiries
 
 📧 Email: devproject.ve@gmail.com
-🔗 GitHub: [devproject-github](https://github.com/devproject-github)
 
 > If you find this project useful, consider starring ⭐ the repository to show your support!
