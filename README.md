@@ -17,7 +17,7 @@ Frontend for the restaurant reservation management application, built with **Rea
 
 ## 📦 Current Version
 
-### v0.9.0 (Beta)
+### v0.8.0
 
 > **Note:** This is a beta version. Features are still being tested, and breaking changes may occur as the project evolves.
 
