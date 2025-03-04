@@ -27,7 +27,7 @@ Frontend for the restaurant reservation management application, built with **Rea
 
 This frontend repository integrates with the backend API, which handles the management of restaurant reservations, including table allocation and reservation status tracking.
 
-You can explore the backend repository here [Restaurant Reservation Management API](https://github.com/devproject-github/restaurant-reservations-api).
+You can explore the backend repository here [Restaurant Reservation Management API](https://github.com/danielcaraballo/restaurant-reservations-api).
 
 ---
 
@@ -38,7 +38,7 @@ Follow these steps to set up the project locally:
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/devproject-github/restaurant-reservations-client.git
+   git clone https://github.com/danielcaraballo/restaurant-reservations-client.git
    cd restaurant-reservation-client
    ```
 
@@ -65,7 +65,7 @@ We welcome contributions! Follow these steps to get started:
 1. Fork the repository.
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/devproject-github/restaurant-reservations-client.git
+   git clone https://github.com/danielcaraballo/restaurant-reservations-client.git
    ```
 3. Create a new branch:
    ```bash
